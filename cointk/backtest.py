@@ -34,7 +34,6 @@ def backtest(strategy, initial_funds=1000, initial_balance=0, fill_prob=0.5,
              data_name='data', datapart='val',
              plot_fnm='temp-plot.html',
              train_prop=0.8, val_prop=0.1, verbose=1, plot_freq=10000, plot_args={}):
-
     '''
         Runs backtest for a given strategy on historical dataset and output its decisions and results.
         Note that because of fill_prob, to get deterministic results you should call random.seed
@@ -65,7 +64,6 @@ def backtest(strategy, initial_funds=1000, initial_balance=0, fill_prob=0.5,
     if verbose:
         print("data size: ", data.shape)
     
-
     time1 = time.time()
 
     funds = initial_funds  # US dollars
