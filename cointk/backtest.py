@@ -12,7 +12,7 @@ from copy import deepcopy
 
 
 def resolve_data(data, fnm, name, datapart,
-                 train_prop=0.8, val_prop=0.1):
+                 train_prop, val_prop):
     '''
         Either read in the dataset or use a caller-provided one
     '''
@@ -60,7 +60,8 @@ def backtest(strategy, initial_funds=1000, initial_balance=0, fill_prob=0.5,
     strategy_args = deepcopy(strategy.__dict__)
 
     # default to validation
-    data = resolve_data(data, data_fnm, data_name, datapart)
+    data = resolve_data(data, data_fnm, data_name,
+                        datapart, train_prop, val_prop)
     if verbose:
         print("data size: ", data.shape)
     
