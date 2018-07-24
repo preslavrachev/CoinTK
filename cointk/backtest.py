@@ -33,7 +33,7 @@ def backtest(strategy, initial_funds=1000, initial_balance=0, fill_prob=0.5,
              history_fnm='histories/backtest.npz',
              data_name='data', datapart='val',
              plot_fnm='temp-plot.html',
-             train_prop=0.8, val_prop=0.1, verbose=1, plot_freq=10000, plot_args={}):
+             train_prop=0.8, val_prop=0.1, verbose=1, plot_freq=None, plot_freq_ratio=0.01, plot_args={}):
     '''
         Runs backtest for a given strategy on historical dataset and output its decisions and results.
         Note that because of fill_prob, to get deterministic results you should call random.seed
@@ -43,7 +43,7 @@ def backtest(strategy, initial_funds=1000, initial_balance=0, fill_prob=0.5,
             fill_prob determines the probability that an order will fail, to simulate real market competitions
 
             fee is the fraction of transaction fee
-            
+
             history_fnm is used for the Bitbox-Server
 
             train_prop and val_prop, each a fraction adding to less than 1, determine the size of the training & testing sets.
@@ -61,9 +61,14 @@ def backtest(strategy, initial_funds=1000, initial_balance=0, fill_prob=0.5,
     # default to validation
     data = resolve_data(data, data_fnm, data_name,
                         datapart, train_prop, val_prop)
+
+    if plot_freq is None:
+        plot_freq = int(data.shape[0] * plot_freq_ratio)
+
     if verbose:
         print("data size: ", data.shape)
-    
+        print("plot frequency stride: {} ticks".format(plot_freq))
+
     time1 = time.time()
 
     funds = initial_funds  # US dollars
